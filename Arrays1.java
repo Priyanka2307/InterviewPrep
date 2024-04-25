@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Arrays1 {
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -9,7 +11,17 @@ public class Arrays1 {
         System.out.println(lotteryNums[2]);
 
 
-        int[] arr = new int[] {92, 12, 38,74};
+        int[] arr = new int[] {1,2,3,4};
+        reverseArray(arr);
+
+        Object[] arrRotate = new Object[]{1,2,3,4};
+        System.out.println(Arrays.toString(rotateArray(arrRotate)));
+
+        Object[] aarrMoveZero = new Object[]{0,0,1,1,1,0};
+        System.out.println(Arrays.toString(moveZerosToEnd(aarrMoveZero)));
+
+        Object[] aarrMoveZero1 = new Object[]{0,0,1,2,3,4,5,0};
+        System.out.println(Arrays.toString(moveZerosToEnd(aarrMoveZero1)));
 
         Integer[] array = new Integer[]{1,2,3,4};
         displaysTriangle(array);
@@ -104,23 +116,28 @@ public class Arrays1 {
         return secondSmallest;
     }
 
-    private static Integer findSecondLargestItem(Integer[] arr){
+    private static Integer[] findSecondLargestItem(Integer[] arr){
         int largest = Integer.MIN_VALUE;
         int secondLargest = Integer.MIN_VALUE;
+        int smallest = Integer.MAX_VALUE;
+        int secondSmallest = Integer.MIN_VALUE;
 
+        for (int i = 0;i < arr.length;i++)
+        {
+            smallest = Math.min(smallest,arr[i]);
+            largest = Math.max(largest,arr[i]);
+        }
         for (int i = 0; i< arr.length; i++){
             int current = arr[i];
-            if (current > largest){
-                secondLargest = largest;
-                largest = current;
-            } else if (current > secondLargest && current != largest) {
+            if (current > secondLargest && current != largest ){
                 secondLargest = current;
             }
+            if (current < secondSmallest && current != smallest) {
+
+            }
         }
-        if (secondLargest == Integer.MAX_VALUE){
-            return null;
-        }
-        return secondLargest;
+        Integer[] result = new Integer[]{secondLargest, secondSmallest};
+        return result;
     }
 
     private static Integer findLargestItem(Integer[] arr){
@@ -155,5 +172,46 @@ public class Arrays1 {
             System.out.println();
         }
         System.out.println();
+    }
+
+    private static Object[] rotateArray(Object[] arr){
+        Object[] result = new Object[arr.length];
+        for(int i=0; i< arr.length; i++){
+            result[(i+1) % arr.length] = arr[i];
+        }
+        return result;
+    }
+
+    private static Object[] moveZerosToEnd(Object[] arr){
+//        for(int i =0; i< arr.length; i++){
+//            for (int j = i+1; j< arr.length; j++){
+//                if (arr[i].equals(0) && !arr[j].equals(0)){
+//                    arr[i] = arr[j];
+//                    arr[j] = 0;
+//                    break;
+//                }
+//            }
+//        }
+        int count = 0;
+        for (int i =0; i<arr.length; i++){
+            if (!arr[i].equals(0)){
+                arr[count] = arr[i];
+                count++;
+            }
+        }
+        while (count < arr.length){
+            arr[count] =0;
+            count++;
+        }
+        return arr;
+    }
+
+    public static void reverseArray(int[] arr){
+        for (int i = 0; i< arr.length/2; i++){
+            int temp = arr[i];
+            arr[i] = arr[arr.length - 1 - i];
+            arr[arr.length - 1 - i] = temp;
+        }
+        System.out.println(Arrays.toString(arr));
     }
 }
