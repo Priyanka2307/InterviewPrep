@@ -14,6 +14,29 @@ public class Arrays1 {
         int[] arr = new int[] {1,2,3,4};
         reverseArray(arr);
 
+        int[] count = new int[]{1,0,1,1,0,1};
+        countMaxConsecutiveOnes(count);
+
+        int[] arrMiss = new int[]{3,0,1};
+        missingNumbers(arrMiss);
+
+        int[] arrSingleElement = new int[]{2,2,1};
+        getSingleElement(arrSingleElement);
+
+//        int[] leftArray = new int[]{7, 5, 2, 11, 2, 43, 1, 1};
+//        int[] leftArray = new int[]{5, 6, 7, 8};
+        int[] leftArray = new int[]{1,2,3,4,5,6,7};
+        System.out.println(Arrays.toString(rotateArrayLeft(leftArray, 3)));
+
+        int [] majorArray = new int[]{2,2,1,1,1,2,2};
+//        int [] majorArray = new int[]{3,2,3};
+        int majorElement = majorityElement(majorArray);
+        System.out.println("Major element" +majorElement);
+
+        int[] a = new int[] {1,1,2,2,2,3,3};
+        int k = checkDuplicates(a);
+        System.out.println("Duplicates Removed from array and its size is " +k );
+
         Object[] arrRotate = new Object[]{1,2,3,4};
         System.out.println(Arrays.toString(rotateArray(arrRotate)));
 
@@ -213,5 +236,141 @@ public class Arrays1 {
             arr[arr.length - 1 - i] = temp;
         }
         System.out.println(Arrays.toString(arr));
+    }
+
+    private static boolean checkSortedArray(int[] a){
+        boolean flag = true;
+
+        for(int i = 0; i<a.length - 1; i++){
+            if(a[i] > a[i+1]){
+                flag = false;
+            }
+        }
+        return flag;
+    }
+
+    private static int checkDuplicates(int[] a){
+        int i = 0;
+        for(int j = 1; j<a.length; j++){
+            if(a[i] != a[j]){
+                i++;
+                a[i] = a[j];
+            }
+        }
+        return i+1;
+    }
+
+    private static int[] rotateArrayLeft(int[] arr, int k){
+//        int n = arr.length;
+//        int[] result = new int[arr.length];
+//        for(int i = n-1; i >= 0; i--){
+//            result[i % arr.length] = arr[n % arr.length];
+//            n--;
+//        }
+//        return result;
+        for(int j = 0; j<k; j++){
+            int temp = arr[0];
+            for(int i = 0; i<arr.length- 1; i++){
+                arr[i] = arr[i+1];
+            }
+            arr[arr.length - 1] = temp;
+        }
+        return arr;
+    }
+
+    private static int majorityElement(int[] a){
+        int majorElementSize = a.length / 2;
+        int count = 1;
+        int majorElement= 0;
+//        for(int i = 0; i< a.length; i++){
+//            for (int j = i+1; j<a.length -1; j++){
+//                int temp = a[i];
+//                if(a[j] < a[i]){
+//                    a[i] = a[j];
+//                    a[j] = temp;
+//                }
+//            }
+//        }
+//        for (int i =0; i< a.length; i++){
+//            for(int j =i+1; j< a.length -1; j++){
+//                if(a[i] == a[j]){
+//                    count ++;
+//                } else if (a[i] != a[j]) {
+//                    if(count > majorElementSize){
+//                        majorElement = a[i];
+//                    } else{
+//                        count = 1;
+//                        i= j;
+//                        break;
+//                    }
+//                }
+//            }
+//
+//        }
+        for(int i = 0; i< a.length; i++){
+            for(int j =i+1; j< a.length -1; j++){
+                if(a[i]== a[j]){
+                    count++;
+                }
+            }
+            if(count > a.length/2){
+                majorElement = a[i];
+            }
+        }
+        System.out.println("major" + Arrays.toString(a));
+        return majorElement;
+    }
+
+    private static int missingNumbersMyApproach(int[] a){
+        int missingNUm = 0;
+        for(int i = 0; i< a.length; i++){
+            for (int j = i+1; j<a.length; j++){
+                int temp = a[i];
+                if(a[j] < a[i]){
+                    a[i] = a[j];
+                    a[j] = temp;
+                }
+            }
+        }
+        for (int i =0; i< a.length - 1;i++){
+            if(a[i+1] != a[i] + 1){
+                missingNUm = a[i] +1;
+            }
+        }
+        System.out.println("missingNBUmber" +missingNUm);
+        return missingNUm;
+    }
+
+    private static void missingNumbers(int[] a){
+        int sum =0;
+        int max= (a.length*(a.length +1))/2;
+        for(int i = 0;i < a.length; i++){
+            sum+=a[i];
+        }
+        System.out.println("Missing Numbers: "+(max-sum));
+    }
+
+    private static void countMaxConsecutiveOnes(int[] a){
+        int count = 0;
+        int maxCount = 0;
+        for(int i = 0; i<a.length;i++){
+            if(a[i] == 1){
+                count++;
+            }else {
+                count =0;
+            }
+            if(count > maxCount){
+                maxCount = count;
+            }
+        }
+        System.out.println("Maximum consecutive One's: "+maxCount);
+    }
+
+    private static void getSingleElement(int[] a){
+        int xorr = 0;
+        for (int i = 0; i < a.length; i++) {
+            xorr = xorr ^ a[i];
+        }
+        System.out.println("single element: "+xorr);
     }
 }
